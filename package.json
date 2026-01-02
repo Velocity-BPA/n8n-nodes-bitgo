@@ -1,0 +1,87 @@
+{
+  "name": "n8n-nodes-bitgo",
+  "version": "1.0.0",
+  "description": "A comprehensive n8n community node for BitGo providing 12 resources and 80+ operations for institutional digital asset custody, multi-signature wallets, and enterprise cryptocurrency management.",
+  "license": "BUSL-1.1",
+  "author": {
+    "name": "Velocity BPA",
+    "email": "licensing@velobpa.com",
+    "url": "https://velobpa.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Velocity-BPA/n8n-nodes-bitgo.git"
+  },
+  "homepage": "https://github.com/Velocity-BPA/n8n-nodes-bitgo#readme",
+  "bugs": {
+    "url": "https://github.com/Velocity-BPA/n8n-nodes-bitgo/issues"
+  },
+  "keywords": [
+    "n8n",
+    "n8n-community-node-package",
+    "bitgo",
+    "cryptocurrency",
+    "digital-assets",
+    "custody",
+    "multi-sig",
+    "wallet",
+    "bitcoin",
+    "ethereum",
+    "institutional",
+    "enterprise",
+    "blockchain",
+    "crypto-wallet"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/BitGoApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/BitGo/BitGo.node.js",
+      "dist/nodes/BitGo/BitGoTrigger.node.js"
+    ]
+  },
+  "scripts": {
+    "build": "tsc && npm run copy:icons",
+    "copy:icons": "cp -r nodes/BitGo/*.svg dist/nodes/BitGo/ 2>/dev/null || true",
+    "dev": "tsc --watch",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.ts\"",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.0",
+    "eslint-plugin-prettier": "^5.1.0",
+    "jest": "^29.7.0",
+    "n8n-workflow": "^1.0.0",
+    "prettier": "^3.2.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=1.0.0"
+  }
+}

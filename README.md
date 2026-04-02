@@ -8,25 +8,25 @@
 >
 > For licensing information, visit https://velobpa.com/licensing or contact licensing@velobpa.com.
 
-An n8n community node for BitGo's enterprise cryptocurrency wallet and security platform. With 6 comprehensive resources, this node enables automated wallet management, transaction processing, approval workflows, webhook handling, enterprise administration, and policy enforcement for institutional cryptocurrency operations.
+This n8n community node provides comprehensive integration with BitGo's enterprise cryptocurrency platform, featuring 6 core resources for digital asset management. It enables secure wallet operations, address management, transaction monitoring, fund transfers, key management, and webhook configuration for institutional-grade cryptocurrency workflows.
 
 ![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)
 ![License](https://img.shields.io/badge/license-BSL--1.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
-![BitGo API](https://img.shields.io/badge/BitGo-API%20v2-orange)
-![Cryptocurrency](https://img.shields.io/badge/Crypto-Wallet%20Management-green)
-![Security](https://img.shields.io/badge/Enterprise-Security-red)
+![Cryptocurrency](https://img.shields.io/badge/crypto-BitGo-orange)
+![Multi-Sig](https://img.shields.io/badge/multi--sig-enabled-green)
+![Enterprise](https://img.shields.io/badge/enterprise-grade-purple)
 
 ## Features
 
-- **Multi-Signature Wallets** - Create, manage, and operate enterprise-grade multi-signature cryptocurrency wallets
-- **Transaction Automation** - Send, receive, and track cryptocurrency transactions with automated workflows
-- **Approval Workflows** - Manage pending approvals for transactions and policy changes with automated decision logic
-- **Webhook Integration** - Receive real-time notifications for wallet events, transactions, and security alerts
-- **Enterprise Management** - Administer users, permissions, and organizational settings across your BitGo enterprise
-- **Policy Enforcement** - Create and manage spending policies, velocity limits, and security rules
-- **Multi-Currency Support** - Support for Bitcoin, Ethereum, and 200+ other cryptocurrencies and tokens
-- **Compliance Ready** - Built-in compliance features for institutional cryptocurrency operations
+- **Multi-Signature Wallet Management** - Create, configure, and manage enterprise-grade multi-signature wallets across multiple cryptocurrencies
+- **Secure Address Generation** - Generate and validate cryptocurrency addresses with comprehensive metadata and balance tracking
+- **Transaction Monitoring** - Real-time transaction tracking, verification, and detailed transaction history analysis
+- **Automated Fund Transfers** - Execute secure transfers with multi-signature approval workflows and compliance controls
+- **Advanced Key Management** - Enterprise key generation, rotation, and secure storage with hierarchical deterministic support
+- **Real-Time Webhook Integration** - Configure and manage webhooks for transaction notifications, wallet events, and security alerts
+- **Multi-Currency Support** - Native support for Bitcoin, Ethereum, and 100+ other cryptocurrencies and tokens
+- **Compliance & Auditing** - Built-in compliance features with detailed audit trails and regulatory reporting capabilities
 
 ## Installation
 
@@ -61,9 +61,10 @@ n8n start
 
 | Field | Description | Required |
 |-------|-------------|----------|
-| Access Token | BitGo API access token from your account settings | Yes |
-| Environment | Production or Test environment | Yes |
-| Express Server | Custom BitGo Express server URL (optional) | No |
+| API Key | Your BitGo API access key from the developer console | ✓ |
+| Environment | Choose between 'test' (testnet) or 'prod' (mainnet) | ✓ |
+| Base URL | BitGo API endpoint (auto-configured based on environment) | ✓ |
+| Passphrase | Wallet passphrase for transaction signing operations | ✗ |
 
 ## Resources & Operations
 
@@ -71,140 +72,113 @@ n8n start
 
 | Operation | Description |
 |-----------|-------------|
-| Create | Create a new multi-signature wallet |
-| Get | Retrieve wallet information and balances |
-| List | List all wallets for the authenticated user |
-| Update | Update wallet settings and labels |
-| Delete | Remove a wallet (requires approval) |
-| Get Balance | Get current balance and unconfirmed balance |
-| Get Addresses | List receiving addresses for the wallet |
-| Generate Address | Create new receiving address |
-| Get Transactions | Retrieve transaction history |
-| Get Transfers | Get transfer history with detailed information |
+| Create | Generate new multi-signature wallets with customizable security parameters |
+| Get | Retrieve detailed wallet information including balances and configuration |
+| List | Fetch all wallets associated with your account with filtering options |
+| Update | Modify wallet settings, labels, and security configurations |
+| Get Balance | Check current balance and pending transactions for specific wallets |
+| Get Transactions | Retrieve transaction history with advanced filtering and pagination |
 
-### 2. Transaction
+### 2. Address
 
 | Operation | Description |
 |-----------|-------------|
-| Send | Send cryptocurrency to one or more recipients |
-| Build | Build an unsigned transaction |
-| Sign | Sign a transaction with wallet keys |
-| Submit | Submit a signed transaction to the network |
-| Get | Retrieve transaction details by ID |
-| List | List transactions for a wallet |
-| Estimate Fee | Calculate transaction fees |
-| Get UTXO | Get unspent transaction outputs |
-| Accelerate | Increase transaction fee (RBF) |
+| Create | Generate new receiving addresses for wallets with optional labels |
+| Get | Retrieve address details including balance and transaction history |
+| List | Fetch all addresses for a wallet with filtering and search capabilities |
+| Validate | Verify address format and network compatibility |
+| Get Balance | Check balance for specific addresses across multiple confirmations |
+| Get Transactions | View all transactions associated with specific addresses |
 
-### 3. PendingApproval
+### 3. Transaction
 
 | Operation | Description |
 |-----------|-------------|
-| Get | Retrieve pending approval details |
-| List | List all pending approvals |
-| Approve | Approve a pending transaction or policy change |
-| Reject | Reject a pending approval |
-| Update | Update approval with additional information |
+| Get | Retrieve detailed transaction information including confirmations and fees |
+| List | Query transactions with advanced filtering by date, amount, and status |
+| Get by Hash | Fetch transaction details using blockchain transaction hash |
+| Verify | Validate transaction signatures and confirm blockchain inclusion |
+| Get Confirmations | Check current confirmation count and estimated completion time |
+| Get Fee Estimate | Calculate optimal transaction fees for different priority levels |
 
-### 4. Webhook
-
-| Operation | Description |
-|-----------|-------------|
-| Create | Set up webhook for wallet events |
-| Get | Retrieve webhook configuration |
-| List | List all configured webhooks |
-| Update | Modify webhook settings |
-| Delete | Remove webhook subscription |
-| Test | Test webhook delivery |
-| Get Notifications | Retrieve webhook notification history |
-
-### 5. Enterprise
+### 4. Transfer
 
 | Operation | Description |
 |-----------|-------------|
-| Get | Retrieve enterprise information |
-| List Users | Get all users in the enterprise |
-| Invite User | Send invitation to new user |
-| Update User | Modify user permissions and settings |
-| Remove User | Remove user from enterprise |
-| Get Audit Log | Retrieve security and activity logs |
-| Get Settings | Get enterprise configuration |
-| Update Settings | Modify enterprise settings |
+| Create | Initiate new cryptocurrency transfers with multi-signature requirements |
+| Send | Execute pre-approved transfers with final signature authorization |
+| Get | Retrieve transfer status and detailed execution information |
+| List | View transfer history with comprehensive filtering and status tracking |
+| Cancel | Cancel pending transfers before final signature completion |
+| Approve | Provide additional signatures for multi-signature transfer approval |
 
-### 6. Policy
+### 5. Key
 
 | Operation | Description |
 |-----------|-------------|
-| Create | Create new spending or security policy |
-| Get | Retrieve policy details |
-| List | List all policies for wallet or enterprise |
-| Update | Modify existing policy rules |
-| Delete | Remove policy (requires approval) |
-| Test | Validate policy against transaction |
+| Create | Generate new cryptographic keys with secure entropy sources |
+| Get | Retrieve public key information and associated metadata |
+| List | View all keys associated with your account and their usage status |
+| Backup | Export key backup information for disaster recovery purposes |
+| Derive | Generate child keys using hierarchical deterministic derivation |
+| Verify | Validate key integrity and cryptographic properties |
+
+### 6. Webhook
+
+| Operation | Description |
+|-----------|-------------|
+| Create | Set up new webhook endpoints for real-time event notifications |
+| Get | Retrieve webhook configuration and delivery status information |
+| List | View all configured webhooks with filtering and status monitoring |
+| Update | Modify webhook URLs, events, and configuration parameters |
+| Delete | Remove webhook subscriptions and clean up endpoint configurations |
+| Test | Send test notifications to verify webhook endpoint functionality |
 
 ## Usage Examples
 
-### Create Multi-Signature Wallet
-
 ```javascript
+// Create a new Bitcoin wallet
 {
-  "label": "Treasury Wallet",
-  "passphrase": "secure-passphrase",
-  "userKey": "xpub...",
-  "backupKey": "xpub...",
   "coin": "btc",
-  "m": 2,
-  "n": 3,
-  "enterprise": "5f8c1d2e3b4a5c6d7e8f9012"
+  "label": "Corporate Treasury Wallet",
+  "passphrase": "secure-passphrase-123",
+  "userKey": "xpub6C...",
+  "backupKey": "xpub6D...",
+  "enterprise": "enterprise-id-123"
 }
 ```
 
-### Send Bitcoin Transaction
-
 ```javascript
+// Execute a Bitcoin transfer
 {
-  "walletId": "5f1e2d3c4b5a6789012345ab",
-  "recipients": [
-    {
-      "address": "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
-      "amount": 1000000
-    }
-  ],
-  "feeRate": 15,
-  "memo": "Payment to supplier"
+  "walletId": "wallet-abc123",
+  "amount": 50000000,
+  "address": "3P14159f73E4gFr7JterCCQh9QjiTjiZrG",
+  "walletPassphrase": "secure-passphrase-123",
+  "comment": "Payment to supplier XYZ"
 }
 ```
 
-### Set Up Transaction Webhook
-
 ```javascript
+// Set up transaction webhook
 {
   "type": "transfer",
-  "url": "https://api.yourcompany.com/bitgo-webhook",
+  "url": "https://your-app.com/webhooks/bitgo",
   "coin": "btc",
-  "walletId": "5f1e2d3c4b5a6789012345ab",
-  "numConfirmations": 1,
-  "allToken": false
+  "walletId": "wallet-abc123",
+  "numConfirmations": 3,
+  "label": "Transaction Notifications"
 }
 ```
 
-### Create Spending Policy
-
 ```javascript
+// Get wallet transaction history
 {
-  "rules": [
-    {
-      "condition": {
-        "amount": 10000000
-      },
-      "action": {
-        "type": "getApproval",
-        "approvalsRequired": 2
-      }
-    }
-  ],
-  "coin": "btc",
-  "type": "velocity"
+  "walletId": "wallet-abc123",
+  "limit": 50,
+  "skip": 0,
+  "minValue": 1000000,
+  "dateGte": "2024-01-01T00:00:00Z"
 }
 ```
 
@@ -212,12 +186,12 @@ n8n start
 
 | Error | Description | Solution |
 |-------|-------------|----------|
-| 401 Unauthorized | Invalid or expired API token | Check access token and regenerate if needed |
-| 403 Forbidden | Insufficient permissions | Verify user has required permissions for operation |
-| 404 Not Found | Wallet or resource doesn't exist | Verify wallet ID and resource existence |
-| 400 Bad Request | Invalid parameters or malformed request | Check parameter format and required fields |
-| 429 Too Many Requests | Rate limit exceeded | Implement request throttling and retry logic |
-| 500 Internal Error | BitGo service error | Check BitGo status page and retry after delay |
+| Invalid API Key | Authentication failed with provided credentials | Verify API key is correct and has proper permissions |
+| Insufficient Balance | Wallet balance too low for requested transfer amount | Check wallet balance and reduce transfer amount or add funds |
+| Invalid Address | Cryptocurrency address format is incorrect or unsupported | Validate address format matches the target cryptocurrency network |
+| Signature Required | Multi-signature transaction requires additional approvals | Obtain required signatures from authorized wallet participants |
+| Rate Limited | API request frequency exceeds allowed limits | Implement request throttling and retry with exponential backoff |
+| Webhook Timeout | Webhook endpoint failed to respond within timeout period | Verify webhook URL accessibility and implement proper response handling |
 
 ## Development
 
@@ -263,4 +237,4 @@ Contributions are welcome! Please ensure:
 
 - **Issues**: [GitHub Issues](https://github.com/Velocity-BPA/n8n-nodes-bitgo/issues)
 - **BitGo API Documentation**: [BitGo Developer Portal](https://app.bitgo.com/docs/)
-- **BitGo SDK**: [BitGo JavaScript SDK](https://github.com/BitGo/BitGoJS)
+- **BitGo Support**: [BitGo Help Center](https://support.bitgo.com/)

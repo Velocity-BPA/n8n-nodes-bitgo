@@ -53,8 +53,20 @@ export class BitGo implements INodeType {
             value: 'wallet',
           },
           {
+            name: 'Address',
+            value: 'address',
+          },
+          {
             name: 'Transaction',
             value: 'transaction',
+          },
+          {
+            name: 'Transfer',
+            value: 'transfer',
+          },
+          {
+            name: 'Key',
+            value: 'key',
           },
           {
             name: 'PendingApproval',
@@ -81,56 +93,56 @@ export class BitGo implements INodeType {
   name: 'operation',
   type: 'options',
   noDataExpression: true,
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-    },
-  },
+  displayOptions: { show: { resource: ['wallet'] } },
   options: [
-    {
-      name: 'List Wallets',
-      value: 'listWallets',
-      description: 'Get all wallets for user',
-      action: 'List wallets',
-    },
-    {
-      name: 'Create Wallet',
-      value: 'createWallet',
-      description: 'Create a new wallet',
-      action: 'Create wallet',
-    },
-    {
-      name: 'Get Wallet',
-      value: 'getWallet',
-      description: 'Get wallet details',
-      action: 'Get wallet',
-    },
-    {
-      name: 'Update Wallet',
-      value: 'updateWallet',
-      description: 'Update wallet settings',
-      action: 'Update wallet',
-    },
-    {
-      name: 'Delete Wallet',
-      value: 'deleteWallet',
-      description: 'Delete a wallet',
-      action: 'Delete wallet',
-    },
-    {
-      name: 'Get Wallet Addresses',
-      value: 'getWalletAddresses',
-      description: 'Get wallet addresses',
-      action: 'Get wallet addresses',
-    },
-    {
-      name: 'Create Address',
-      value: 'createAddress',
-      description: 'Generate new address',
-      action: 'Create address',
-    },
+    { name: 'Create Wallet', value: 'createWallet', description: 'Create a new multi-signature wallet', action: 'Create wallet' },
+    { name: 'Get Wallet', value: 'getWallet', description: 'Get wallet details by ID', action: 'Get wallet' },
+    { name: 'List Wallets', value: 'listWallets', description: 'List all wallets for a coin', action: 'List wallets' },
+    { name: 'Update Wallet', value: 'updateWallet', description: 'Update wallet settings', action: 'Update wallet' },
+    { name: 'Delete Wallet', value: 'deleteWallet', description: 'Delete a wallet', action: 'Delete wallet' },
+    { name: 'Get Wallet Addresses', value: 'getWalletAddresses', description: 'Get wallet addresses', action: 'Get wallet addresses' },
+    { name: 'Create Address', value: 'createAddress', description: 'Generate new address', action: 'Create address' },
+    { name: 'Freeze Wallet', value: 'freezeWallet', description: 'Freeze wallet operations', action: 'Freeze wallet' }
   ],
   default: 'listWallets',
+},
+{
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: {
+		show: {
+			resource: ['address'],
+		},
+	},
+	options: [
+		{
+			name: 'Create Address',
+			value: 'createAddress',
+			description: 'Generate new receive address for wallet',
+			action: 'Create address',
+		},
+		{
+			name: 'Get Address',
+			value: 'getAddress',
+			description: 'Get details of a specific address',
+			action: 'Get address',
+		},
+		{
+			name: 'List Addresses',
+			value: 'listAddresses',
+			description: 'List all addresses for a wallet',
+			action: 'List addresses',
+		},
+		{
+			name: 'Update Address',
+			value: 'updateAddress',
+			description: 'Update address label',
+			action: 'Update address',
+		},
+	],
+	default: 'createAddress',
 },
 {
   displayName: 'Operation',
@@ -174,6 +186,12 @@ export class BitGo implements INodeType {
       action: 'Sign transaction',
     },
     {
+      name: 'Create Transaction',
+      value: 'createTransaction',
+      description: 'Send cryptocurrency to address',
+      action: 'Create a transaction',
+    },
+    {
       name: 'List Transfers',
       value: 'listTransfers',
       description: 'Get transfers',
@@ -187,6 +205,61 @@ export class BitGo implements INodeType {
     },
   ],
   default: 'listTransactions',
+},
+{
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: { show: { resource: ['transfer'] } },
+	options: [
+		{
+			name: 'Create Transfer',
+			value: 'createTransfer',
+			description: 'Initiate transfer with policies',
+			action: 'Create transfer',
+		},
+		{
+			name: 'Get Transfer',
+			value: 'getTransfer',
+			description: 'Get transfer status',
+			action: 'Get transfer',
+		},
+		{
+			name: 'List Transfers',
+			value: 'listTransfers',
+			description: 'List wallet transfers',
+			action: 'List transfers',
+		},
+		{
+			name: 'Update Transfer',
+			value: 'updateTransfer',
+			description: 'Accept or reject pending transfer',
+			action: 'Update transfer',
+		},
+		{
+			name: 'Cancel Transfer',
+			value: 'cancelTransfer',
+			description: 'Cancel pending transfer',
+			action: 'Cancel transfer',
+		},
+	],
+	default: 'createTransfer',
+},
+{
+  displayName: 'Operation',
+  name: 'operation',
+  type: 'options',
+  noDataExpression: true,
+  displayOptions: { show: { resource: ['key'] } },
+  options: [
+    { name: 'Create Keychain', value: 'createKeychain', description: 'Generate a new keychain for wallet operations', action: 'Create a new keychain' },
+    { name: 'Get Keychain', value: 'getKeychain', description: 'Get details of a specific keychain', action: 'Get keychain details' },
+    { name: 'Update Keychain', value: 'updateKeychain', description: 'Update keychain properties', action: 'Update keychain properties' },
+    { name: 'Consolidate Unspents', value: 'consolidateUnspents', description: 'Consolidate wallet UTXOs (Unspent Transaction Outputs)', action: 'Consolidate wallet UTXOs' },
+    { name: 'List Unspents', value: 'listUnspents', description: 'List unspent transaction outputs for a wallet', action: 'List unspent transaction outputs' }
+  ],
+  default: 'createKeychain',
 },
 {
   displayName: 'Operation',
@@ -278,6 +351,12 @@ export class BitGo implements INodeType {
       value: 'simulateWebhook',
       description: 'Test webhook delivery',
       action: 'Simulate webhook',
+    },
+    {
+      name: 'Delete Webhook',
+      value: 'deleteWebhook',
+      description: 'Remove webhook',
+      action: 'Delete a webhook',
     },
   ],
   default: 'listWebhooks',
@@ -393,98 +472,38 @@ export class BitGo implements INodeType {
   displayName: 'Coin',
   name: 'coin',
   type: 'string',
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['listWallets'],
-    },
-  },
-  default: 'btc',
-  description: 'The coin to list wallets for',
-},
-{
-  displayName: 'Limit',
-  name: 'limit',
-  type: 'number',
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['listWallets'],
-    },
-  },
-  default: 25,
-  description: 'Maximum number of results to return',
-},
-{
-  displayName: 'Previous ID',
-  name: 'prevId',
-  type: 'string',
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['listWallets'],
-    },
-  },
-  default: '',
-  description: 'Return the next batch of results after this wallet ID',
-},
-{
-  displayName: 'Coin',
-  name: 'coin',
-  type: 'string',
   required: true,
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['createWallet'],
-    },
-  },
   default: 'btc',
-  description: 'The coin for the new wallet',
+  description: 'Cryptocurrency identifier (btc, eth, ltc, etc.)',
+  displayOptions: { show: { resource: ['wallet'], operation: ['createWallet', 'getWallet', 'listWallets', 'updateWallet', 'freezeWallet', 'deleteWallet', 'getWalletAddresses', 'createAddress'] } },
 },
 {
   displayName: 'Label',
   name: 'label',
   type: 'string',
   required: true,
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['createWallet'],
-    },
-  },
   default: '',
-  description: 'A human-readable name for this wallet',
+  description: 'A human-readable name for the wallet',
+  displayOptions: { show: { resource: ['wallet'], operation: ['createWallet'] } },
 },
 {
   displayName: 'Passphrase',
   name: 'passphrase',
   type: 'string',
-  typeOptions: {
-    password: true,
-  },
+  typeOptions: { password: true },
   required: true,
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['createWallet'],
-    },
-  },
   default: '',
-  description: 'Passphrase to encrypt the wallet private key',
+  description: 'Passphrase to encrypt the wallet',
+  displayOptions: { show: { resource: ['wallet'], operation: ['createWallet'] } },
 },
 {
   displayName: 'User Key',
   name: 'userKey',
   type: 'string',
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['createWallet'],
-    },
-  },
+  required: false,
   default: '',
-  description: 'User public key for the wallet',
+  description: 'User public key for multi-signature setup',
+  displayOptions: { show: { resource: ['wallet'], operation: ['createWallet'] } },
 },
 {
   displayName: 'Backup XPub',
@@ -513,36 +532,39 @@ export class BitGo implements INodeType {
   description: 'Enterprise ID for enterprise wallets',
 },
 {
-  displayName: 'Coin',
-  name: 'coin',
+  displayName: 'Wallet ID',
+  name: 'walletId',
   type: 'string',
   required: true,
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['getWallet', 'updateWallet', 'deleteWallet', 'getWalletAddresses', 'createAddress'],
-    },
-  },
-  default: 'btc',
-  description: 'The coin of the wallet',
+  default: '',
+  description: 'The unique identifier of the wallet',
+  displayOptions: { show: { resource: ['wallet'], operation: ['getWallet', 'updateWallet', 'deleteWallet', 'getWalletAddresses', 'createAddress', 'freezeWallet'] } },
 },
 {
-  displayName: 'Wallet ID',
-  name: 'id',
+  displayName: 'Limit',
+  name: 'limit',
+  type: 'number',
+  required: false,
+  default: 25,
+  description: 'Maximum number of wallets to return',
+  displayOptions: { show: { resource: ['wallet'], operation: ['listWallets'] } },
+},
+{
+  displayName: 'Previous ID',
+  name: 'prevId',
   type: 'string',
-  required: true,
   displayOptions: {
     show: {
       resource: ['wallet'],
-      operation: ['getWallet', 'updateWallet', 'deleteWallet', 'getWalletAddresses', 'createAddress'],
+      operation: ['listWallets'],
     },
   },
   default: '',
-  description: 'The wallet ID',
+  description: 'Return the next batch of results after this wallet ID',
 },
 {
   displayName: 'Label',
-  name: 'label',
+  name: 'updateLabel',
   type: 'string',
   displayOptions: {
     show: {
@@ -565,19 +587,6 @@ export class BitGo implements INodeType {
   },
   default: 1,
   description: 'Number of approvals required for transactions',
-},
-{
-  displayName: 'Limit',
-  name: 'limit',
-  type: 'number',
-  displayOptions: {
-    show: {
-      resource: ['wallet'],
-      operation: ['getWalletAddresses'],
-    },
-  },
-  default: 25,
-  description: 'Maximum number of addresses to return',
 },
 {
   displayName: 'Mine',
@@ -617,6 +626,110 @@ export class BitGo implements INodeType {
   },
   default: '',
   description: 'Label for the new address',
+},
+{
+  displayName: 'Duration',
+  name: 'duration',
+  type: 'number',
+  required: false,
+  default: 3600,
+  description: 'Duration to freeze the wallet in seconds',
+  displayOptions: { show: { resource: ['wallet'], operation: ['freezeWallet'] } },
+},
+{
+	displayName: 'Coin',
+	name: 'coin',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['address'],
+			operation: ['createAddress', 'getAddress', 'listAddresses', 'updateAddress'],
+		},
+	},
+	default: 'btc',
+	placeholder: 'btc',
+	description: 'Cryptocurrency identifier (btc, eth, ltc, etc.)',
+},
+{
+	displayName: 'Wallet ID',
+	name: 'walletId',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['address'],
+			operation: ['createAddress', 'getAddress', 'listAddresses', 'updateAddress'],
+		},
+	},
+	default: '',
+	description: 'The wallet ID to perform address operations on',
+},
+{
+	displayName: 'Address',
+	name: 'address',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['address'],
+			operation: ['getAddress', 'updateAddress'],
+		},
+	},
+	default: '',
+	description: 'The address to get or update',
+},
+{
+	displayName: 'Chain',
+	name: 'chain',
+	type: 'number',
+	displayOptions: {
+		show: {
+			resource: ['address'],
+			operation: ['createAddress'],
+		},
+	},
+	default: 0,
+	description: 'Address chain (0 for receive addresses, 1 for change addresses)',
+},
+{
+	displayName: 'Label',
+	name: 'label',
+	type: 'string',
+	displayOptions: {
+		show: {
+			resource: ['address'],
+			operation: ['createAddress', 'updateAddress'],
+		},
+	},
+	default: '',
+	description: 'Label for the address',
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	displayOptions: {
+		show: {
+			resource: ['address'],
+			operation: ['listAddresses'],
+		},
+	},
+	default: 25,
+	description: 'Maximum number of addresses to return',
+},
+{
+	displayName: 'Skip',
+	name: 'skip',
+	type: 'number',
+	displayOptions: {
+		show: {
+			resource: ['address'],
+			operation: ['listAddresses'],
+		},
+	},
+	default: 0,
+	description: 'Number of addresses to skip',
 },
 {
   displayName: 'Coin Type',
@@ -821,7 +934,7 @@ export class BitGo implements INodeType {
   displayOptions: {
     show: {
       resource: ['transaction'],
-      operation: ['sendTransaction'],
+      operation: ['sendTransaction', 'signTransaction'],
     },
   },
   default: '',
@@ -887,15 +1000,327 @@ export class BitGo implements INodeType {
   description: 'Private key for signing',
 },
 {
+  displayName: 'Address',
+  name: 'address',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['transaction'],
+      operation: ['createTransaction'],
+    },
+  },
+  default: '',
+  description: 'The destination address',
+},
+{
+  displayName: 'Amount',
+  name: 'amount',
+  type: 'number',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['transaction'],
+      operation: ['createTransaction'],
+    },
+  },
+  default: 0,
+  description: 'The amount to send in base units',
+},
+{
+  displayName: 'Wallet Passphrase',
+  name: 'walletPassphrase',
+  type: 'string',
+  typeOptions: {
+    password: true,
+  },
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['transaction'],
+      operation: ['createTransaction'],
+    },
+  },
+  default: '',
+  description: 'The wallet passphrase for signing',
+},
+{
+	displayName: 'Coin',
+	name: 'coin',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['createTransfer', 'getTransfer', 'listTransfers', 'updateTransfer', 'cancelTransfer'],
+		},
+	},
+	default: 'btc',
+	placeholder: 'btc, eth, ltc, etc.',
+	description: 'The cryptocurrency identifier',
+},
+{
+	displayName: 'Wallet ID',
+	name: 'walletId',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['createTransfer', 'getTransfer', 'listTransfers', 'updateTransfer', 'cancelTransfer'],
+		},
+	},
+	default: '',
+	description: 'The wallet ID',
+},
+{
+	displayName: 'Transfer ID',
+	name: 'transferId',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['getTransfer', 'updateTransfer', 'cancelTransfer'],
+		},
+	},
+	default: '',
+	description: 'The transfer ID',
+},
+{
+	displayName: 'Recipient Address',
+	name: 'address',
+	type: 'string',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['createTransfer'],
+		},
+	},
+	default: '',
+	description: 'The recipient wallet address',
+},
+{
+	displayName: 'Amount',
+	name: 'amount',
+	type: 'number',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['createTransfer'],
+		},
+	},
+	default: 0,
+	description: 'The amount to transfer (in base units)',
+},
+{
+	displayName: 'Wallet Passphrase',
+	name: 'walletPassphrase',
+	type: 'string',
+	typeOptions: {
+		password: true,
+	},
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['createTransfer'],
+		},
+	},
+	default: '',
+	description: 'The wallet passphrase for transaction signing',
+},
+{
+	displayName: 'State',
+	name: 'state',
+	type: 'options',
+	options: [
+		{ name: 'All', value: '' },
+		{ name: 'Pending', value: 'pending' },
+		{ name: 'Confirmed', value: 'confirmed' },
+		{ name: 'Failed', value: 'failed' },
+		{ name: 'Rejected', value: 'rejected' },
+	],
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['listTransfers'],
+		},
+	},
+	default: '',
+	description: 'Filter transfers by state',
+},
+{
+	displayName: 'Transfer State',
+	name: 'transferState',
+	type: 'options',
+	required: true,
+	options: [
+		{ name: 'Accepted', value: 'accepted' },
+		{ name: 'Rejected', value: 'rejected' },
+	],
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['updateTransfer'],
+		},
+	},
+	default: 'accepted',
+	description: 'The new state for the transfer',
+},
+{
+	displayName: 'Limit',
+	name: 'limit',
+	type: 'number',
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['listTransfers'],
+		},
+	},
+	default: 25,
+	description: 'Maximum number of results to return',
+},
+{
+	displayName: 'Additional Fields',
+	name: 'additionalFields',
+	type: 'collection',
+	placeholder: 'Add Field',
+	default: {},
+	displayOptions: {
+		show: {
+			resource: ['transfer'],
+			operation: ['createTransfer'],
+		},
+	},
+	options: [
+		{
+			displayName: 'Fee Rate',
+			name: 'feeRate',
+			type: 'number',
+			default: 0,
+			description: 'Fee rate for the transaction',
+		},
+		{
+			displayName: 'Comment',
+			name: 'comment',
+			type: 'string',
+			default: '',
+			description: 'Comment for the transfer',
+		},
+		{
+			displayName: 'Target Wallet ID',
+			name: 'targetWalletId',
+			type: 'string',
+			default: '',
+			description: 'Target wallet ID for internal transfers',
+		},
+	],
+},
+{
+  displayName: 'Source',
+  name: 'source',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['key'],
+      operation: ['createKeychain']
+    }
+  },
+  default: '',
+  description: 'Source for keychain generation',
+},
+{
+  displayName: 'Entropy',
+  name: 'entropy',
+  type: 'string',
+  required: false,
+  displayOptions: {
+    show: {
+      resource: ['key'],
+      operation: ['createKeychain']
+    }
+  },
+  default: '',
+  description: 'Optional entropy for keychain generation',
+},
+{
+  displayName: 'Public Key',
+  name: 'pub',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['key'],
+      operation: ['getKeychain', 'updateKeychain']
+    }
+  },
+  default: '',
+  description: 'Public key of the keychain',
+},
+{
+  displayName: 'Encrypted Private Key',
+  name: 'encryptedPrv',
+  type: 'string',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['key'],
+      operation: ['updateKeychain']
+    }
+  },
+  default: '',
+  description: 'Encrypted private key to update',
+},
+{
+  displayName: 'Coin',
+  name: 'coin',
+  type: 'options',
+  required: true,
+  displayOptions: {
+    show: {
+      resource: ['key'],
+      operation: ['consolidateUnspents', 'listUnspents']
+    }
+  },
+  options: [
+    { name: 'Bitcoin', value: 'btc' },
+    { name: 'Bitcoin Testnet', value: 'tbtc' },
+    { name: 'Ethereum', value: 'eth' },
+    { name: 'Ethereum Testnet', value: 'teth' },
+    { name: 'Litecoin', value: 'ltc' },
+    { name: 'Litecoin Testnet', value: 'tltc' }
+  ],
+  default: 'btc',
+  description: 'The cryptocurrency to operate on',
+},
+{
+  displayName: 'Minimum Value',
+  name: 'minValue',
+  type: 'number',
+  required: false,
+  displayOptions: {
+    show: {
+      resource: ['key'],
+      operation: ['listUnspents']
+    }
+  },
+  default: 0,
+  description: 'Minimum value of unspent outputs to include',
+},
+{
   displayName: 'Wallet ID',
   name: 'walletId',
-  type: 'string',
   displayOptions: {
     show: {
       resource: ['pendingApproval'],
       operation: ['listPendingApprovals'],
     },
   },
+  type: 'string',
   default: '',
   description: 'Filter by wallet ID',
 },
@@ -1088,7 +1513,7 @@ export class BitGo implements INodeType {
   displayOptions: {
     show: {
       resource: ['webhook'],
-      operation: ['getWebhook', 'updateWebhook', 'removeWebhook', 'simulateWebhook'],
+      operation: ['getWebhook', 'updateWebhook', 'removeWebhook', 'simulateWebhook', 'deleteWebhook'],
     },
   },
   default: '',
@@ -1455,8 +1880,14 @@ export class BitGo implements INodeType {
     switch (resource) {
       case 'wallet':
         return [await executeWalletOperations.call(this, items)];
+      case 'address':
+        return [await executeAddressOperations.call(this, items)];
       case 'transaction':
         return [await executeTransactionOperations.call(this, items)];
+      case 'transfer':
+        return [await executeTransferOperations.call(this, items)];
+      case 'key':
+        return [await executeKeyOperations.call(this, items)];
       case 'pendingApproval':
         return [await executePendingApprovalOperations.call(this, items)];
       case 'webhook':
@@ -1505,7 +1936,7 @@ async function executeWalletOperations(
             method: 'GET',
             url: `${credentials.baseUrl}/wallets${queryString}`,
             headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
+              'Authorization': `Bearer ${credentials.accessToken}`,
               'Content-Type': 'application/json',
             },
             json: true,
@@ -1534,9 +1965,9 @@ async function executeWalletOperations(
 
           const options: any = {
             method: 'POST',
-            url: `${credentials.baseUrl}/${coin}/wallets`,
+            url: `${credentials.baseUrl}/${coin}/wallet`,
             headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
+              'Authorization': `Bearer ${credentials.accessToken}`,
               'Content-Type': 'application/json',
             },
             body,
@@ -1549,14 +1980,13 @@ async function executeWalletOperations(
 
         case 'getWallet': {
           const coin = this.getNodeParameter('coin', i) as string;
-          const id = this.getNodeParameter('id', i) as string;
+          const walletId = this.getNodeParameter('walletId', i) as string;
 
           const options: any = {
             method: 'GET',
-            url: `${credentials.baseUrl}/${coin}/wallet/${id}`,
+            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}`,
             headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${credentials.accessToken}`,
             },
             json: true,
           };
@@ -1567,19 +1997,19 @@ async function executeWalletOperations(
 
         case 'updateWallet': {
           const coin = this.getNodeParameter('coin', i) as string;
-          const id = this.getNodeParameter('id', i) as string;
-          const label = this.getNodeParameter('label', i) as string;
+          const walletId = this.getNodeParameter('walletId', i) as string;
+          const updateLabel = this.getNodeParameter('updateLabel', i) as string;
           const approvalsRequired = this.getNodeParameter('approvalsRequired', i) as number;
 
           const body: any = {};
-          if (label) body.label = label;
+          if (updateLabel) body.label = updateLabel;
           if (approvalsRequired !== undefined) body.approvalsRequired = approvalsRequired;
 
           const options: any = {
-            method: 'PUT',
-            url: `${credentials.baseUrl}/${coin}/wallet/${id}`,
+            method: 'POST',
+            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}`,
             headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
+              'Authorization': `Bearer ${credentials.accessToken}`,
               'Content-Type': 'application/json',
             },
             body,
@@ -1592,13 +2022,13 @@ async function executeWalletOperations(
 
         case 'deleteWallet': {
           const coin = this.getNodeParameter('coin', i) as string;
-          const id = this.getNodeParameter('id', i) as string;
+          const walletId = this.getNodeParameter('walletId', i) as string;
 
           const options: any = {
             method: 'DELETE',
-            url: `${credentials.baseUrl}/${coin}/wallet/${id}`,
+            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}`,
             headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
+              'Authorization': `Bearer ${credentials.accessToken}`,
               'Content-Type': 'application/json',
             },
             json: true,
@@ -1610,7 +2040,7 @@ async function executeWalletOperations(
 
         case 'getWalletAddresses': {
           const coin = this.getNodeParameter('coin', i) as string;
-          const id = this.getNodeParameter('id', i) as string;
+          const walletId = this.getNodeParameter('walletId', i) as string;
           const limit = this.getNodeParameter('limit', i) as number;
           const mine = this.getNodeParameter('mine', i) as boolean;
 
@@ -1624,9 +2054,9 @@ async function executeWalletOperations(
 
           const options: any = {
             method: 'GET',
-            url: `${credentials.baseUrl}/${coin}/wallet/${id}/addresses${queryString}`,
+            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/addresses${queryString}`,
             headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
+              'Authorization': `Bearer ${credentials.accessToken}`,
               'Content-Type': 'application/json',
             },
             json: true,
@@ -1638,7 +2068,7 @@ async function executeWalletOperations(
 
         case 'createAddress': {
           const coin = this.getNodeParameter('coin', i) as string;
-          const id = this.getNodeParameter('id', i) as string;
+          const walletId = this.getNodeParameter('walletId', i) as string;
           const chain = this.getNodeParameter('chain', i) as number;
           const addressLabel = this.getNodeParameter('addressLabel', i) as string;
 
@@ -1648,12 +2078,32 @@ async function executeWalletOperations(
 
           const options: any = {
             method: 'POST',
-            url: `${credentials.baseUrl}/${coin}/wallet/${id}/address`,
+            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/address`,
             headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
+              'Authorization': `Bearer ${credentials.accessToken}`,
               'Content-Type': 'application/json',
             },
             body,
+            json: true,
+          };
+
+          result = await this.helpers.httpRequest(options) as any;
+          break;
+        }
+
+        case 'freezeWallet': {
+          const coin = this.getNodeParameter('coin', i) as string;
+          const walletId = this.getNodeParameter('walletId', i) as string;
+          const duration = this.getNodeParameter('duration', i) as number;
+
+          const options: any = {
+            method: 'POST',
+            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/freeze`,
+            headers: {
+              'Authorization': `Bearer ${credentials.accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: { duration },
             json: true,
           };
 
@@ -1671,934 +2121,4 @@ async function executeWalletOperations(
       if (this.continueOnFail()) {
         returnData.push({ 
           json: { error: error.message }, 
-          pairedItem: { item: i } 
-        });
-      } else {
-        if (error.response && error.response.body) {
-          throw new NodeApiError(this.getNode(), error.response.body);
-        }
-        throw new NodeOperationError(this.getNode(), error.message);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeTransactionOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('bitgoApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-      const coinType = this.getNodeParameter('coinType', i) as string;
-      const walletId = this.getNodeParameter('walletId', i) as string;
-
-      switch (operation) {
-        case 'listTransactions': {
-          const limit = this.getNodeParameter('limit', i, 50) as number;
-          const prevId = this.getNodeParameter('prevId', i, '') as string;
-          const state = this.getNodeParameter('state', i, '') as string;
-
-          const queryParams: any = {};
-          if (limit) queryParams.limit = limit;
-          if (prevId) queryParams.prevId = prevId;
-          if (state) queryParams.state = state;
-
-          const queryString = Object.keys(queryParams).length > 0 
-            ? '?' + new URLSearchParams(queryParams).toString() 
-            : '';
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/${coinType}/wallet/${walletId}/tx${queryString}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTransaction': {
-          const txId = this.getNodeParameter('txId', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/${coinType}/wallet/${walletId}/tx/${txId}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'buildTransaction': {
-          const recipients = this.getNodeParameter('recipients', i) as any[];
-          const feeRate = this.getNodeParameter('feeRate', i, 10000) as number;
-          const minConfirms = this.getNodeParameter('minConfirms', i, 1) as number;
-
-          const body: any = {
-            recipients: recipients.map((recipient: any) => ({
-              address: recipient.address,
-              amount: recipient.amount.toString(),
-            })),
-            feeRate,
-            minConfirms,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `${credentials.baseUrl}/${coinType}/wallet/${walletId}/tx/build`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'sendTransaction': {
-          const txHex = this.getNodeParameter('txHex', i) as string;
-          const halfSigned = this.getNodeParameter('halfSigned', i, '{}') as string;
-          const comment = this.getNodeParameter('comment', i, '') as string;
-
-          const body: any = {
-            txHex,
-          };
-
-          if (halfSigned && halfSigned !== '{}') {
-            body.halfSigned = JSON.parse(halfSigned);
-          }
-          if (comment) {
-            body.comment = comment;
-          }
-
-          const options: any = {
-            method: 'POST',
-            url: `${credentials.baseUrl}/${coinType}/wallet/${walletId}/tx/send`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'signTransaction': {
-          const txPrebuild = this.getNodeParameter('txPrebuild', i) as string;
-          const prv = this.getNodeParameter('prv', i) as string;
-
-          const body: any = {
-            txPrebuild: JSON.parse(txPrebuild),
-            prv,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `${credentials.baseUrl}/${coinType}/wallet/${walletId}/tx/sign`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'listTransfers': {
-          const limit = this.getNodeParameter('limit', i, 50) as number;
-          const state = this.getNodeParameter('state', i, '') as string;
-          const type = this.getNodeParameter('type', i, '') as string;
-
-          const queryParams: any = {};
-          if (limit) queryParams.limit = limit;
-          if (state) queryParams.state = state;
-          if (type) queryParams.type = type;
-
-          const queryString = Object.keys(queryParams).length > 0 
-            ? '?' + new URLSearchParams(queryParams).toString() 
-            : '';
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/${coinType}/wallet/${walletId}/transfer${queryString}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getTransfer': {
-          const transferId = this.getNodeParameter('transferId', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/${coinType}/wallet/${walletId}/transfer/${transferId}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({ json: result, pairedItem: { item: i } });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({ 
-          json: { error: error.message }, 
-          pairedItem: { item: i } 
-        });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executePendingApprovalOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('bitgoApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'listPendingApprovals': {
-          const walletId = this.getNodeParameter('walletId', i) as string;
-          const enterprise = this.getNodeParameter('enterprise', i) as string;
-          const state = this.getNodeParameter('state', i) as string;
-          const limit = this.getNodeParameter('limit', i) as number;
-
-          const queryParams: any = {};
-          if (walletId) queryParams.walletId = walletId;
-          if (enterprise) queryParams.enterprise = enterprise;
-          if (state !== 'all') queryParams.state = state;
-          if (limit) queryParams.limit = limit.toString();
-
-          const queryString = new URLSearchParams(queryParams).toString();
-          const url = `${credentials.baseUrl}/pendingapprovals${queryString ? '?' + queryString : ''}`;
-
-          const options: any = {
-            method: 'GET',
-            url,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getPendingApproval': {
-          const id = this.getNodeParameter('id', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/pendingapprovals/${id}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'updateApprovalState': {
-          const id = this.getNodeParameter('id', i) as string;
-          const approvalState = this.getNodeParameter('approvalState', i) as string;
-          const otp = this.getNodeParameter('otp', i) as string;
-
-          const body: any = {
-            state: approvalState,
-          };
-
-          if (otp) {
-            body.otp = otp;
-          }
-
-          const options: any = {
-            method: 'PUT',
-            url: `${credentials.baseUrl}/pendingapprovals/${id}/state`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'constructApprovalTransaction': {
-          const id = this.getNodeParameter('id', i) as string;
-          const recipientsInput = this.getNodeParameter('recipients', i) as string;
-          const feeRate = this.getNodeParameter('feeRate', i) as number;
-
-          let recipients: any;
-          try {
-            recipients = JSON.parse(recipientsInput);
-          } catch (error: any) {
-            throw new NodeOperationError(
-              this.getNode(),
-              `Invalid recipients JSON: ${error.message}`,
-            );
-          }
-
-          const body: any = {
-            recipients,
-          };
-
-          if (feeRate > 0) {
-            body.feeRate = feeRate;
-          }
-
-          const options: any = {
-            method: 'POST',
-            url: `${credentials.baseUrl}/pendingapprovals/${id}/constructTx`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'cancelPendingApproval': {
-          const id = this.getNodeParameter('id', i) as string;
-
-          const options: any = {
-            method: 'DELETE',
-            url: `${credentials.baseUrl}/pendingapprovals/${id}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(
-            this.getNode(),
-            `Unknown operation: ${operation}`,
-          );
-      }
-
-      returnData.push({
-        json: result,
-        pairedItem: { item: i },
-      });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({
-          json: { error: error.message },
-          pairedItem: { item: i },
-        });
-      } else {
-        if (error.httpCode) {
-          throw new NodeApiError(this.getNode(), error);
-        } else {
-          throw new NodeOperationError(this.getNode(), error.message);
-        }
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeWebhookOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('bitgoApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-      const coin = this.getNodeParameter('coin', i) as string;
-      const walletId = this.getNodeParameter('walletId', i) as string;
-
-      const baseOptions: any = {
-        headers: {
-          'Authorization': `Bearer ${credentials.apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        json: true,
-      };
-
-      switch (operation) {
-        case 'listWebhooks': {
-          const allTokens = this.getNodeParameter('allTokens', i) as boolean;
-          
-          const options: any = {
-            ...baseOptions,
-            method: 'GET',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/webhooks`,
-          };
-
-          if (allTokens) {
-            options.qs = { allTokens: true };
-          }
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'createWebhook': {
-          const type = this.getNodeParameter('type', i) as string;
-          const url = this.getNodeParameter('url', i) as string;
-          const label = this.getNodeParameter('label', i) as string;
-
-          const body: any = {
-            type,
-            url,
-          };
-
-          if (label) {
-            body.label = label;
-          }
-
-          const options: any = {
-            ...baseOptions,
-            method: 'POST',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/webhooks`,
-            body,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getWebhook': {
-          const webhookId = this.getNodeParameter('webhookId', i) as string;
-
-          const options: any = {
-            ...baseOptions,
-            method: 'GET',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/webhooks/${webhookId}`,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'updateWebhook': {
-          const webhookId = this.getNodeParameter('webhookId', i) as string;
-          const type = this.getNodeParameter('type', i) as string;
-          const url = this.getNodeParameter('url', i) as string;
-          const label = this.getNodeParameter('label', i) as string;
-
-          const body: any = {
-            type,
-            url,
-          };
-
-          if (label) {
-            body.label = label;
-          }
-
-          const options: any = {
-            ...baseOptions,
-            method: 'PUT',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/webhooks/${webhookId}`,
-            body,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'removeWebhook': {
-          const webhookId = this.getNodeParameter('webhookId', i) as string;
-
-          const options: any = {
-            ...baseOptions,
-            method: 'DELETE',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/webhooks/${webhookId}`,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'simulateWebhook': {
-          const webhookId = this.getNodeParameter('webhookId', i) as string;
-          const txHash = this.getNodeParameter('txHash', i) as string;
-          const simulationWebhookId = this.getNodeParameter('simulationWebhookId', i) as string;
-
-          const body: any = {};
-
-          if (txHash) {
-            body.txHash = txHash;
-          }
-
-          if (simulationWebhookId) {
-            body.webhookId = simulationWebhookId;
-          }
-
-          const options: any = {
-            ...baseOptions,
-            method: 'POST',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/webhooks/${webhookId}/simulate`,
-            body,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`, { itemIndex: i });
-      }
-
-      returnData.push({
-        json: result,
-        pairedItem: { item: i },
-      });
-
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({
-          json: { error: error.message },
-          pairedItem: { item: i },
-        });
-      } else {
-        if (error.response && error.response.body && error.response.body.error) {
-          throw new NodeApiError(this.getNode(), error.response.body.error, { itemIndex: i });
-        }
-        throw new NodeOperationError(this.getNode(), error.message, { itemIndex: i });
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executeEnterpriseOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('bitgoApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'listEnterprises': {
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/enterprise`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getEnterprise': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'updateEnterprise': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-          const name = this.getNodeParameter('name', i) as string;
-          const emergencyPhone = this.getNodeParameter('emergencyPhone', i) as string;
-
-          const body: any = {};
-          if (name) body.name = name;
-          if (emergencyPhone) body.emergencyPhone = emergencyPhone;
-
-          const options: any = {
-            method: 'PUT',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getEnterpriseUsers': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-          const allowInactiveAdmins = this.getNodeParameter('allowInactiveAdmins', i) as boolean;
-
-          const queryParams = new URLSearchParams();
-          if (allowInactiveAdmins) {
-            queryParams.append('allowInactiveAdmins', allowInactiveAdmins.toString());
-          }
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}/users${queryParams.toString() ? '?' + queryParams.toString() : ''}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'addEnterpriseUser': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-          const username = this.getNodeParameter('username', i) as string;
-          const usernames = this.getNodeParameter('usernames', i) as string;
-          const permission = this.getNodeParameter('permission', i) as string;
-
-          const body: any = {
-            permission,
-          };
-
-          if (username) {
-            body.username = username;
-          }
-
-          if (usernames) {
-            body.usernames = usernames.split(',').map((u: string) => u.trim());
-          }
-
-          const options: any = {
-            method: 'POST',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}/users`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'removeEnterpriseUser': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-          const userId = this.getNodeParameter('userId', i) as string;
-
-          const options: any = {
-            method: 'DELETE',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}/users/${userId}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getEnterpriseWallets': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-          const coin = this.getNodeParameter('coin', i) as string;
-          const limit = this.getNodeParameter('limit', i) as number;
-
-          const queryParams = new URLSearchParams();
-          if (coin) queryParams.append('coin', coin);
-          if (limit) queryParams.append('limit', limit.toString());
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}/wallets${queryParams.toString() ? '?' + queryParams.toString() : ''}`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({ json: result, pairedItem: { item: i } });
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
-      } else {
-        throw new NodeApiError(this.getNode(), error);
-      }
-    }
-  }
-
-  return returnData;
-}
-
-async function executePolicyOperations(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
-): Promise<INodeExecutionData[]> {
-  const returnData: INodeExecutionData[] = [];
-  const operation = this.getNodeParameter('operation', 0) as string;
-  const credentials = await this.getCredentials('bitgoApi') as any;
-
-  for (let i = 0; i < items.length; i++) {
-    try {
-      let result: any;
-
-      switch (operation) {
-        case 'getWalletPolicy': {
-          const coin = this.getNodeParameter('coin', i) as string;
-          const walletId = this.getNodeParameter('walletId', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/policy`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'updateWalletPolicy': {
-          const coin = this.getNodeParameter('coin', i) as string;
-          const walletId = this.getNodeParameter('walletId', i) as string;
-          const rules = this.getNodeParameter('rules', i) as any;
-          const action = this.getNodeParameter('action', i) as string;
-          const condition = this.getNodeParameter('condition', i) as any;
-
-          const body: any = {
-            rules: typeof rules === 'string' ? JSON.parse(rules) : rules,
-          };
-
-          if (action) {
-            body.action = action;
-          }
-
-          if (condition) {
-            body.condition = typeof condition === 'string' ? JSON.parse(condition) : condition;
-          }
-
-          const options: any = {
-            method: 'PUT',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/policy`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'addPolicyRule': {
-          const coin = this.getNodeParameter('coin', i) as string;
-          const walletId = this.getNodeParameter('walletId', i) as string;
-          const id = this.getNodeParameter('id', i) as string;
-          const type = this.getNodeParameter('type', i) as string;
-          const action = this.getNodeParameter('action', i) as string;
-          const condition = this.getNodeParameter('condition', i) as any;
-
-          const body: any = {
-            id,
-            type,
-            action,
-            condition: typeof condition === 'string' ? JSON.parse(condition) : condition,
-          };
-
-          const options: any = {
-            method: 'POST',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/policy/rule`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'removePolicyRule': {
-          const coin = this.getNodeParameter('coin', i) as string;
-          const walletId = this.getNodeParameter('walletId', i) as string;
-          const ruleId = this.getNodeParameter('ruleId', i) as string;
-
-          const options: any = {
-            method: 'DELETE',
-            url: `${credentials.baseUrl}/${coin}/wallet/${walletId}/policy/rule`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: {
-              ruleId,
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'getEnterprisePolicy': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-
-          const options: any = {
-            method: 'GET',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}/policy`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        case 'updateEnterprisePolicy': {
-          const enterpriseId = this.getNodeParameter('enterpriseId', i) as string;
-          const rules = this.getNodeParameter('rules', i) as any;
-
-          const body: any = {
-            rules: typeof rules === 'string' ? JSON.parse(rules) : rules,
-          };
-
-          const options: any = {
-            method: 'PUT',
-            url: `${credentials.baseUrl}/enterprise/${enterpriseId}/policy`,
-            headers: {
-              'Authorization': `Bearer ${credentials.apiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body,
-            json: true,
-          };
-
-          result = await this.helpers.httpRequest(options) as any;
-          break;
-        }
-
-        default:
-          throw new NodeOperationError(this.getNode(), `Unknown operation: ${operation}`);
-      }
-
-      returnData.push({
-        json: result,
-        pairedItem: { item: i },
-      });
-
-    } catch (error: any) {
-      if (this.continueOnFail()) {
-        returnData.push({
-          json: { error: error.message },
-          pairedItem: { item: i },
-        });
-      } else {
-        if (error.httpCode) {
-          throw new NodeApiError(this.getNode(), error);
-        }
-        throw new NodeOperationError(this.getNode(), error.message);
-      }
-    }
-  }
-
-  return returnData;
-}
+          paired
